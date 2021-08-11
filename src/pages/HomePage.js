@@ -53,9 +53,9 @@ const HomePage = () => {
   return (
     <>
       {/* Begin page content */}
-      <main class="container">
-      <div class="p-4 p-md-5 mb-4 mt-4 text-dark rounded bg-warning">
-      <div class="col-md-6 px-0">
+      <main className="container">
+      <div className="p-4 p-md-5 mb-4 mt-4 text-dark rounded bg-warning">
+      <div className="col-md-6 px-0">
             <h1 className="mt-5 text-dark">Welcome</h1>
             <p className="lead">
               <BsFillHeartFill color="black" /> เว็บนี้พัฒนาด้วย React

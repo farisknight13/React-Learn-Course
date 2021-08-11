@@ -7,11 +7,21 @@ import { th } from "date-fns/locale";
 import { BsEyeFill } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 
+//redux
+import { addToCart } from "../redux/actions/cartAction";
+import { useSelector, useDispatch } from "react-redux";
+
 const ProductPage = () => {
   const [product, setProduct] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const cancelToken = React.useRef(null)
+
+  //redux
+  const dispatch = useDispatch()
+  const cart = useSelector((state) => state.cartReducer.cart)
+  const total = useSelector((state) => state.cartReducer.total)
+
 
   const getData = async () => {
     try {
@@ -57,11 +67,27 @@ const ProductPage = () => {
     );
   }
 
+  const addCart = (p) => {
+    // console.log(p)
+    const product = {
+      id: p.id,
+      name: p.title,
+      price: p.view, //Example use view is price
+      qty: 1,
+    }
+
+    //call action
+    dispatch(addToCart(product,cart))
+  }
+
   return (
     <div className="container">
       <div className="row mt-4">
         <div className="col-md-12">
           <h2>Product</h2>
+          {
+            total > 0 && ( <h4>Cart {total} item</h4> )
+          }
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -99,6 +125,9 @@ const ProductPage = () => {
                         <Link to={`/detail/${p.id}/title/${p.title}`}>
                             <BsEyeFill />
                         </Link>
+                        <button onClick={() => addCart(p)} className="btn btn-outline-primary ml-2">
+                          Add Cart
+                        </button>
                     </td>
                   </tr>
                 );
